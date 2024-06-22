@@ -1,9 +1,9 @@
 import React from "react";
 
-const page = () => {
+const cricket = () => {
   return (
     <div className="flex justify-center items-center">
-      <div className="flex flex-col gap-4 border shadow-2xl rounded-md p-4 font-bold">
+      <div className="flex flex-col gap-4 border-2 border-black rounded-md p-4">
         <div className="flex gap-3 justify-around text-white">
           <button className="bg-blue-500 rounded-md p-4">1</button>
           <button className="bg-blue-500 rounded-md p-4">2</button>
@@ -23,4 +23,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default cricket;
