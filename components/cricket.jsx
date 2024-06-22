@@ -1,6 +1,6 @@
 import React from "react";
 
-const cricket = () => {
+const Cricket = () => {
   return (
     <div className="flex justify-center items-center">
       <div className="flex flex-col gap-4 border-2 border-black rounded-md p-4">
@@ -23,4 +23,4 @@ const cricket = () => {
   );
 };
 
-export default cricket;
+export default Cricket;
