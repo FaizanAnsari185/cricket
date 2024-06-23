@@ -6,13 +6,40 @@ import React, { useState } from "react";
 const page = () => {
   const [runInOneOver, setRunInOneOver] = useState([]);
   const [ballInOneOver, setBallInOneOver] = useState(0);
-  const [score, setScore] = useState(0);
+  const [run, setRun] = useState(0);
   const [wicket, setWicket] = useState(0);
-
+  const [over, setOver] = useState(0);
+  const [teamOneOver, setTeamOneOver] = useState(0);
+  const [teamBallInOneOver, setTeamBallInOneOver] = useState(0);
+  const [teamOneRun, setTeamOneRun] = useState(0);
+  const [teamOneWicket, setTeamOnewWicket] = useState(0);
+  const MAX_OVERS = 2;
   function updateRun(pb) {
+    if (wicket === 10 || over === MAX_OVERS) {
+      setTeamOneRun(run);
+      setTeamOnewWicket(wicket);
+      setTeamOneOver(over);
+      setTeamBallInOneOver(ballInOneOver);
+
+      setRun(0);
+      setWicket(0);
+      setOver(0);
+      setBallInOneOver(0);
+      setRunInOneOver([]);
+      return;
+    }
     if (ballInOneOver === 6) {
       return;
     }
+    // if (ballInOneOver === 5 && over === MAX_OVERS - 1) {
+    //   setTeamOneRun(run);
+    //   setTeamOnewWicket(wicket);
+    //   setTeamOneOver(over);
+    //   setTeamBallInOneOver(ballInOneOver);
+      
+      
+     
+    // }
     if (pb === "Dot Ball") {
       setRunInOneOver([...runInOneOver, "*"]);
       setBallInOneOver(ballInOneOver + 1);
@@ -26,18 +53,24 @@ const page = () => {
     }
     if (pb === "No Ball") {
       setRunInOneOver([...runInOneOver, "NB"]);
-      setScore(score+1)
+      setRun(run + 1);
       return;
     }
     if (pb === "Wide Ball") {
       setRunInOneOver([...runInOneOver, "WB"]);
-      setScore(score+1)
+      setRun(run + 1);
       return;
     } else {
       setRunInOneOver([...runInOneOver, pb]);
       setBallInOneOver(ballInOneOver + 1);
-      setScore(score+pb)
+      setRun(run + pb);
     }
+  }
+
+  function updateOver() {
+    setRunInOneOver([]);
+    setOver(over + 1);
+    setBallInOneOver(0);
   }
 
   return (
@@ -55,13 +88,26 @@ const page = () => {
                 <Playbutton pb={item} updateRun={updateRun} />
               )
             )}
+            {ballInOneOver === 6 && (
+              <button
+                onClick={updateOver}
+                className="bg-green-500 rounded-md p-4 text-white hover:bg-green-600"
+              >
+                Next Over
+              </button>
+            )}
           </div>
         </div>
         <div className="flex flex-col gap-3 justify-around">
-          <div className="flex justify-center">Current Score: {score}-{wicket} (0)</div>
           <div className="flex justify-center">
-            Team 1 Current Score: {score}-{wicket} (0)
+            Current Score: {run}-{wicket} / {over + "." + ballInOneOver}
           </div>
+          {(teamOneOver === MAX_OVERS || teamOneWicket === 10) && (
+            <div className="flex justify-center">
+              Team 1 Total Score: {teamOneRun}-{teamOneWicket} /{" "}
+              {teamOneOver + "." + teamBallInOneOver}
+            </div>
+          )}
         </div>
       </div>
     </div>
