@@ -22,13 +22,13 @@ const page = () => {
   const [teamTwoRun, setTeamTwoRun] = useState(0);
   const [teamTwoWicket, setTeamTwoWicket] = useState(0);
   // Both Teams Innings
-  const [teamOneInnings, setTeamOneInnings] = useState(false);
-  const [teamTwoInnings, setTeamTwoInnings] = useState(false);
+  const [teamOneInningsEnd, setTeamOneInningsEnd] = useState(false);
+  const [teamTwoInningsEnd, setTeamTwoInningsEnd] = useState(false);
   //Team Innings End
 const [winner, setWinner] = useState(0)
 
   useEffect(() => {
-    if (teamTwoInnings) {
+    if (teamTwoInningsEnd) {
       if (teamOneRun > teamTwoRun) {
         console.log("Team 1 won");
         setWinner(1)
@@ -37,11 +37,11 @@ const [winner, setWinner] = useState(0)
         setWinner(2)
       }
     }
-  }, [teamTwoInnings]);
+  }, [teamTwoInningsEnd]);
 
   function updateRun(pb) {
     if (wicket === 9) {
-      if (teamOneInnings === false) {
+      if (teamOneInningsEnd === false) {
         setTeamOneRun(run);
         setTeamOneWicket(wicket + 1);
         if (over === MAX_OVERS - 1 && ballInOneOver === 5) {
@@ -51,7 +51,7 @@ const [winner, setWinner] = useState(0)
           setTeamOneOver(over);
           setTeamOneBallInOneOver(ballInOneOver + 1);
         }
-        setTeamOneInnings(true);
+        setTeamOneInningsEnd(true);
       } else {
         setTeamTwoRun(run);
         setTeamTwoWicket(wicket + 1);
@@ -62,7 +62,7 @@ const [winner, setWinner] = useState(0)
           setTeamOneOver(over);
           setTeamOneBallInOneOver(ballInOneOver + 1);
         }
-        setTeamTwoInnings(true);
+        setTeamTwoInningsEnd(true);
       }
 
       setRun(0);
@@ -82,18 +82,18 @@ const [winner, setWinner] = useState(0)
       setBallInOneOver(ballInOneOver + 1);
 
       if (over === MAX_OVERS - 1 && ballInOneOver === 5) {
-        if (teamOneInnings === false) {
+        if (teamOneInningsEnd === false) {
           setTeamOneRun(run);
           setTeamOneWicket(wicket);
           setTeamOneOver(over + 1);
           setTeamOneBallInOneOver(0);
-          setTeamOneInnings(true);
+          setTeamOneInningsEnd(true);
         } else {
           setTeamTwoRun(run);
           setTeamTwoWicket(wicket);
           setTeamTwoOver(over + 1);
           setTeamTwoBallInOneOver(0);
-          setTeamTwoInnings(true);
+          setTeamTwoInningsEnd(true);
         }
 
         setRun(0);
@@ -106,18 +106,18 @@ const [winner, setWinner] = useState(0)
     }
     if (pb === "Wicket") {
       if (over === MAX_OVERS - 1 && ballInOneOver === 5) {
-        if (teamOneInnings === false) {
+        if (teamOneInningsEnd === false) {
           setTeamOneRun(run);
           setTeamOneWicket(wicket + 1);
           setTeamOneOver(over + 1);
           setTeamOneBallInOneOver(0);
-          setTeamOneInnings(true);
+          setTeamOneInningsEnd(true);
         } else {
           setTeamTwoRun(run);
           setTeamTwoWicket(wicket + 1);
           setTeamTwoOver(over + 1);
           setTeamTwoBallInOneOver(0);
-          setTeamTwoInnings(true);
+          setTeamTwoInningsEnd(true);
         }
 
         setRun(0);
@@ -145,18 +145,18 @@ const [winner, setWinner] = useState(0)
       return;
     } else {
       if (over === MAX_OVERS - 1 && ballInOneOver === 5) {
-        if (teamOneInnings === false) {
+        if (teamOneInningsEnd === false) {
           setTeamOneRun(run + pb);
           setTeamOneWicket(wicket);
           setTeamOneOver(over + 1);
           setTeamOneBallInOneOver(0);
-          setTeamOneInnings(true);
+          setTeamOneInningsEnd(true);
         } else {
           setTeamTwoRun(run + pb);
           setTeamTwoWicket(wicket);
           setTeamTwoOver(over + 1);
           setTeamTwoBallInOneOver(0);
-          setTeamTwoInnings(true);
+          setTeamTwoInningsEnd(true);
         }
 
         setRun(0);
@@ -207,13 +207,13 @@ const [winner, setWinner] = useState(0)
           <div className="flex justify-center">
             Current Score: {run}-{wicket} / {over + "." + ballInOneOver}
           </div>
-          {teamOneInnings && (
+          {teamOneInningsEnd && (
             <div className="flex justify-center">
               Team 1 Total Score: {teamOneRun}-{teamOneWicket} /{" "}
               {teamOneOver + "." + teamOneBallInOneOver}
             </div>
           )}
-          {teamTwoInnings && (
+          {teamTwoInningsEnd && (
             <div className="flex justify-center">
               Team 2 Total Score: {teamTwoRun}-{teamTwoWicket} /{" "}
               {teamTwoOver + "." + teamTwoBallInOneOver}
