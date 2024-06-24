@@ -30,14 +30,24 @@ const page = () => {
       if (teamOneInnings === false) {
         setTeamOneRun(run);
         setTeamOneWicket(wicket + 1);
-        setTeamOneOver(over);
-        setTeamOneBallInOneOver(ballInOneOver + 1);
+        if (over === MAX_OVERS - 1 && ballInOneOver === 5) {
+          setTeamOneOver(over + 1);
+          setTeamOneBallInOneOver(0);
+        } else {
+          setTeamOneOver(over);
+          setTeamOneBallInOneOver(ballInOneOver + 1);
+        }
         setTeamOneInnings(true);
       } else {
         setTeamTwoRun(run);
         setTeamTwoWicket(wicket + 1);
-        setTeamTwoOver(over);
-        setTeamTwoBallInOneOver(ballInOneOver + 1);
+        if (over === MAX_OVERS - 1 && ballInOneOver === 5) {
+          setTeamOneOver(over + 1);
+          setTeamOneBallInOneOver(0);
+        } else {
+          setTeamOneOver(over);
+          setTeamOneBallInOneOver(ballInOneOver + 1);
+        }
         setTeamTwoInnings(true);
       }
 
@@ -59,13 +69,13 @@ const page = () => {
 
       if (over === MAX_OVERS - 1 && ballInOneOver === 5) {
         if (teamOneInnings === false) {
-          setTeamOneRun(run + pb);
+          setTeamOneRun(run);
           setTeamOneWicket(wicket);
           setTeamOneOver(over + 1);
           setTeamOneBallInOneOver(0);
           setTeamOneInnings(true);
         } else {
-          setTeamTwoRun(run + pb);
+          setTeamTwoRun(run);
           setTeamTwoWicket(wicket);
           setTeamTwoOver(over + 1);
           setTeamTwoBallInOneOver(0);
@@ -78,7 +88,6 @@ const page = () => {
         setBallInOneOver(0);
         setRunInOneOver([]);
       }
-
       return;
     }
     if (pb === "Wicket") {
@@ -109,11 +118,13 @@ const page = () => {
       setWicket(wicket + 1);
       return;
     }
+
     if (pb === "No Ball") {
       setRunInOneOver([...runInOneOver, "NB"]);
       setRun(run + 1);
       return;
     }
+
     if (pb === "Wide Ball") {
       setRunInOneOver([...runInOneOver, "WB"]);
       setRun(run + 1);
@@ -188,12 +199,18 @@ const page = () => {
               {teamOneOver + "." + teamOneBallInOneOver}
             </div>
           )}
-          {(teamTwoOver === MAX_OVERS || teamTwoWicket === 9) && (
+          {teamTwoInnings && (
             <div className="flex justify-center">
               Team 2 Total Score: {teamTwoRun}-{teamTwoWicket} /{" "}
               {teamTwoOver + "." + teamTwoBallInOneOver}
             </div>
           )}
+          <div className="flex justify-center">
+              Team 1 Win By 10 Run and 4 Wicket
+            </div>
+            <div className="flex justify-center">
+              Team 2 Win By 20 Run and 5 Wicket
+            </div>
         </div>
       </div>
     </div>
@@ -201,9 +218,3 @@ const page = () => {
 };
 
 export default page;
-
-// if (wicket === "9") {
-//   setTeamOneWicket(teamOneWicket + 1);
-//   setTeamOneBallInOneOver(teamOneBallInOneOver + 1);
-//   return;
-// }
