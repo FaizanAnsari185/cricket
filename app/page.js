@@ -1,7 +1,7 @@
 "use client";
 import Playbutton from "@/components/playbutton";
 import Run from "@/components/run";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const MAX_OVERS = 2;
 
@@ -24,6 +24,20 @@ const page = () => {
   // Both Teams Innings
   const [teamOneInnings, setTeamOneInnings] = useState(false);
   const [teamTwoInnings, setTeamTwoInnings] = useState(false);
+  //Team Innings End
+const [winner, setWinner] = useState(0)
+
+  useEffect(() => {
+    if (teamTwoInnings) {
+      if (teamOneRun > teamTwoRun) {
+        console.log("Team 1 won");
+        setWinner(1)
+      } else {
+        console.log("Team 2 won");
+        setWinner(2)
+      }
+    }
+  }, [teamTwoInnings]);
 
   function updateRun(pb) {
     if (wicket === 9) {
@@ -205,12 +219,9 @@ const page = () => {
               {teamTwoOver + "." + teamTwoBallInOneOver}
             </div>
           )}
-          <div className="flex justify-center">
-              Team 1 Win By 10 Run and 4 Wicket
-            </div>
-            <div className="flex justify-center">
-              Team 2 Win By 20 Run and 5 Wicket
-            </div>
+          { winner !==0 && (
+            <div className="flex justify-center">Team {winner} Won</div>
+          )}
         </div>
       </div>
     </div>
@@ -218,3 +229,21 @@ const page = () => {
 };
 
 export default page;
+
+{
+  /* <div className="flex justify-center">
+              Team 1 Won By 8 Wicket (15 Ball Left)
+            </div>
+            <div className="flex justify-center">
+              Team 1 Won By 5 Wicket
+            </div>
+            <div className="flex justify-center">
+              Team 1 Won By 20 Run
+            </div>
+            <div className="flex justify-center">
+              Team 1 Win By 7 Wicket
+            </div>
+            <div className="flex justify-center">
+              Match Tie
+            </div> */
+}
