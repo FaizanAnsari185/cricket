@@ -21,18 +21,25 @@ const page = () => {
   const [teamTwoBallInOneOver, setTeamTwoBallInOneOver] = useState(0);
   const [teamTwoRun, setTeamTwoRun] = useState(0);
   const [teamTwoWicket, setTeamTwoWicket] = useState(0);
-  
-  function updateRun(pb) {
-    if (wicket === 9 || over === MAX_OVERS) {
-      setTeamOneRun(run);
-      setTeamOneWicket(wicket);
-      setTeamOneOver(over);
-      setTeamOneBallInOneOver(ballInOneOver);
+  // Both Teams Innings
+  const [teamOneInnings, setTeamOneInnings] = useState(false);
+  const [teamTwoInnings, setTeamTwoInnings] = useState(false);
 
-      setTeamTwoRun(run);
-      setTeamTwoWicket(wicket);
-      setTeamTwoOver(over);
-      setTeamTwoBallInOneOver(ballInOneOver);
+  function updateRun(pb) {
+    if (wicket === 9) {
+      if (teamOneInnings === false) {
+        setTeamOneRun(run);
+        setTeamOneWicket(wicket + 1);
+        setTeamOneOver(over);
+        setTeamOneBallInOneOver(ballInOneOver + 1);
+        setTeamOneInnings(true);
+      } else {
+        setTeamTwoRun(run);
+        setTeamTwoWicket(wicket + 1);
+        setTeamTwoOver(over);
+        setTeamTwoBallInOneOver(ballInOneOver + 1);
+        setTeamTwoInnings(true);
+      }
 
       setRun(0);
       setWicket(0);
@@ -41,16 +48,62 @@ const page = () => {
       setRunInOneOver([]);
       return;
     }
+
     if (ballInOneOver === 6) {
       return;
     }
-    
+
     if (pb === "Dot Ball") {
       setRunInOneOver([...runInOneOver, "*"]);
       setBallInOneOver(ballInOneOver + 1);
+
+      if (over === MAX_OVERS - 1 && ballInOneOver === 5) {
+        if (teamOneInnings === false) {
+          setTeamOneRun(run + pb);
+          setTeamOneWicket(wicket);
+          setTeamOneOver(over + 1);
+          setTeamOneBallInOneOver(0);
+          setTeamOneInnings(true);
+        } else {
+          setTeamTwoRun(run + pb);
+          setTeamTwoWicket(wicket);
+          setTeamTwoOver(over + 1);
+          setTeamTwoBallInOneOver(0);
+          setTeamTwoInnings(true);
+        }
+
+        setRun(0);
+        setWicket(0);
+        setOver(0);
+        setBallInOneOver(0);
+        setRunInOneOver([]);
+      }
+
       return;
     }
     if (pb === "Wicket") {
+      if (over === MAX_OVERS - 1 && ballInOneOver === 5) {
+        if (teamOneInnings === false) {
+          setTeamOneRun(run);
+          setTeamOneWicket(wicket + 1);
+          setTeamOneOver(over + 1);
+          setTeamOneBallInOneOver(0);
+          setTeamOneInnings(true);
+        } else {
+          setTeamTwoRun(run);
+          setTeamTwoWicket(wicket + 1);
+          setTeamTwoOver(over + 1);
+          setTeamTwoBallInOneOver(0);
+          setTeamTwoInnings(true);
+        }
+
+        setRun(0);
+        setWicket(0);
+        setOver(0);
+        setBallInOneOver(0);
+        setRunInOneOver([]);
+        return;
+      }
       setRunInOneOver([...runInOneOver, "W"]);
       setBallInOneOver(ballInOneOver + 1);
       setWicket(wicket + 1);
@@ -66,58 +119,33 @@ const page = () => {
       setRun(run + 1);
       return;
     } else {
-      setRunInOneOver([...runInOneOver, pb]);
-      setBallInOneOver(ballInOneOver + 1);
-      setRun(run + pb);
+      if (over === MAX_OVERS - 1 && ballInOneOver === 5) {
+        if (teamOneInnings === false) {
+          setTeamOneRun(run + pb);
+          setTeamOneWicket(wicket);
+          setTeamOneOver(over + 1);
+          setTeamOneBallInOneOver(0);
+          setTeamOneInnings(true);
+        } else {
+          setTeamTwoRun(run + pb);
+          setTeamTwoWicket(wicket);
+          setTeamTwoOver(over + 1);
+          setTeamTwoBallInOneOver(0);
+          setTeamTwoInnings(true);
+        }
+
+        setRun(0);
+        setWicket(0);
+        setOver(0);
+        setBallInOneOver(0);
+        setRunInOneOver([]);
+      } else {
+        setRunInOneOver([...runInOneOver, pb]);
+        setBallInOneOver(ballInOneOver + 1);
+        setRun(run + pb);
+      }
     }
   }
-
-    // function updateRun(pb) {
-    //   if (wicket === 9 || over === MAX_OVERS) {
-    //   setTeamTwoRun(run);
-    //   setTeamTwoWicket(wicket);
-    //   setTeamTwoOver(over);
-    //   setTeamTwoBallInOneOver(ballInOneOver);
-  
-    //   setRun(0);
-    //   setWicket(0);
-    //   setOver(0);
-    //   setBallInOneOver(0);
-    //   setRunInOneOver([]);
-    //   return;
-    //   }
-    //   if (ballInOneOver === 6) {
-    //     return;
-    //   }
-  
-    //   if (pb === "Dot Ball") {
-    //     setRunInOneOver([...runInOneOver, "*"]);
-    //     setBallInOneOver(ballInOneOver + 1);
-    //     return;
-    //   }
-    //   if (pb === "Wicket") {
-    //     setRunInOneOver([...runInOneOver, "W"]);
-    //     setBallInOneOver(ballInOneOver + 1);
-    //     setWicket(wicket + 1);
-    //     return;
-    //   }
-    //   if (pb === "No Ball") {
-    //     setRunInOneOver([...runInOneOver, "NB"]);
-    //     setRun(run + 1);
-    //     return;
-    //   }
-    //   if (pb === "Wide Ball") {
-    //     setRunInOneOver([...runInOneOver, "WB"]);
-    //     setRun(run + 1);
-    //     return;
-    //   } else {
-    //     setRunInOneOver([...runInOneOver, pb]);
-    //     setBallInOneOver(ballInOneOver + 1);
-    //     setRun(run + pb);
-    //   }
-    // }
-
-    
 
   function updateOver() {
     setRunInOneOver([]);
@@ -154,14 +182,16 @@ const page = () => {
           <div className="flex justify-center">
             Current Score: {run}-{wicket} / {over + "." + ballInOneOver}
           </div>
-          {(teamOneOver === MAX_OVERS || teamOneWicket === 9) && (
-            <div className="flex justify-start text-red-700">
-              Team 1 Total Score: {teamOneRun}-{teamOneWicket} /{" "}{teamOneOver + "." + teamOneBallInOneOver}
+          {teamOneInnings && (
+            <div className="flex justify-center">
+              Team 1 Total Score: {teamOneRun}-{teamOneWicket} /{" "}
+              {teamOneOver + "." + teamOneBallInOneOver}
             </div>
           )}
           {(teamTwoOver === MAX_OVERS || teamTwoWicket === 9) && (
-            <div className="flex justify-end text-amber-700">
-              Team 2 Total Score: {teamTwoRun}-{teamTwoWicket} /{" "}{teamTwoOver + "." + teamTwoBallInOneOver}
+            <div className="flex justify-center">
+              Team 2 Total Score: {teamTwoRun}-{teamTwoWicket} /{" "}
+              {teamTwoOver + "." + teamTwoBallInOneOver}
             </div>
           )}
         </div>
@@ -172,16 +202,8 @@ const page = () => {
 
 export default page;
 
-
-// if (ballInOneOver === 5 && over === MAX_OVERS - 1) {
-    //   setTeamOneRun(run);
-    //   setTeamOneWicket(wicket);
-    //   setTeamOneOver(over);
-    //   setTeamOneBallInOneOver(ballInOneOver);
-    // }
-
-    // if (wicket === "9") {
-    //   setTeamOneWicket(teamOneWicket + 1);
-    //   setTeamOneBallInOneOver(teamOneBallInOneOver + 1);
-    //   return;
-    // }
+// if (wicket === "9") {
+//   setTeamOneWicket(teamOneWicket + 1);
+//   setTeamOneBallInOneOver(teamOneBallInOneOver + 1);
+//   return;
+// }
