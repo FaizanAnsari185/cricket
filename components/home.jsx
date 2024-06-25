@@ -27,6 +27,8 @@ const Home = () => {
   //Winner
   const [winner, setWinner] = useState(0);
   const [matchTie, setMatchTie] = useState(0);
+  // Next Match
+  const [nextMatch, setNextMatch] = useState(0);
 
   useEffect(() => {
     if (teamTwoInningsEnd) {
@@ -207,6 +209,19 @@ const Home = () => {
     setBallInOneOver(0);
   }
 
+  function updateMatch() {
+    setRunInOneOver([]);
+    setWinner(0);
+    setTeamOneInningsEnd(false);
+    setTeamTwoInningsEnd(false);
+    setMatchTie(false);
+    setRun(0);
+    setWicket(0);
+    setOver(0);
+    setBallInOneOver(0);
+    setNextMatch(nextMatch);
+  }
+
   return (
     <div className="h-full flex justify-center items-center px-4">
       <div className="flex flex-col gap-4 border shadow-2xl rounded-md p-4 font-bold">
@@ -228,6 +243,14 @@ const Home = () => {
                 className="bg-green-500 rounded-md p-4 text-white hover:bg-green-600"
               >
                 Next Over
+              </button>
+            )}
+            {winner !== 0 && (
+              <button
+                onClick={updateMatch}
+                className="bg-red-500 rounded-md p-4 text-white hover:bg-red-600"
+              >
+                Next Match
               </button>
             )}
           </div>
