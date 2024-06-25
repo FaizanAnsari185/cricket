@@ -38,7 +38,7 @@ const Home = () => {
         setMatchTie("Match Tie");
       }
     }
-  }, [teamTwoInningsEnd]);
+  }, [teamTwoInningsEnd, teamOneRun, teamTwoRun]);
 
   function updateRun(pb) {
     if (wicket === 9) {
@@ -211,14 +211,14 @@ const Home = () => {
       <div className="flex flex-col gap-4 border shadow-2xl rounded-md p-4 font-bold">
         <div className="flex flex-col gap-5 justify-around">
           <div className="flex gap-4 justify-center">
-            {runInOneOver.map((item) => (
-              <Run runwicket={item} />
+            {runInOneOver.map((item, index) => (
+              <Run runwicket={item} key={index} />
             ))}
           </div>
           <div className="flex gap-3 justify-around">
             {[1, 2, 3, 4, 6, "Dot Ball", "Wicket", "No Ball", "Wide Ball"].map(
-              (item) => (
-                <Playbutton pb={item} updateRun={updateRun} />
+              (item, index) => (
+                <Playbutton pb={item} updateRun={updateRun} key={index} />
               )
             )}
             {ballInOneOver === 6 && (
