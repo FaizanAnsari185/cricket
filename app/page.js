@@ -21,23 +21,25 @@ const page = () => {
   const [teamTwoBallInOneOver, setTeamTwoBallInOneOver] = useState(0);
   const [teamTwoRun, setTeamTwoRun] = useState(0);
   const [teamTwoWicket, setTeamTwoWicket] = useState(0);
-  // Both Teams Innings
+  //Team Innings End
   const [teamOneInningsEnd, setTeamOneInningsEnd] = useState(false);
   const [teamTwoInningsEnd, setTeamTwoInningsEnd] = useState(false);
-  //Team Innings End
-const [winner, setWinner] = useState(0)
+  //Winner
+  const [winner, setWinner] = useState(0)
+  const [matchTie, setMatchTie] = useState(0)
 
   useEffect(() => {
     if (teamTwoInningsEnd) {
       if (teamOneRun > teamTwoRun) {
-        console.log("Team 1 won");
         setWinner(1)
-      } else {
-        console.log("Team 2 won");
+      } else if (teamOneRun < teamTwoRun) {
         setWinner(2)
+      } else if (teamOneRun === teamTwoRun) {
+        setMatchTie("Match Tie")
       }
     }
   }, [teamTwoInningsEnd]);
+
 
   function updateRun(pb) {
     if (wicket === 9) {
@@ -221,6 +223,9 @@ const [winner, setWinner] = useState(0)
           )}
           { winner !==0 && (
             <div className="flex justify-center">Team {winner} Won</div>
+          )}
+          { matchTie !==0 && (
+            <div className="flex justify-center">{matchTie}</div>
           )}
         </div>
       </div>
