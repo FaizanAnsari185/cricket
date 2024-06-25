@@ -211,14 +211,22 @@ const Home = () => {
 
   function updateMatch() {
     setRunInOneOver([]);
-    setWinner(0);
-    setTeamOneInningsEnd(false);
-    setTeamTwoInningsEnd(false);
-    setMatchTie(false);
+    setBallInOneOver(0);
     setRun(0);
     setWicket(0);
     setOver(0);
-    setBallInOneOver(0);
+    teamOneOver(0)
+    teamOneBallInOneOver(0)
+    teamOneRun(0)
+    teamOneWicket(0)
+    teamTwoOver(0)
+    teamTwoBallInOneOver(0)
+    teamTwoRun(0)
+    teamTwoWicket(0)
+    setTeamOneInningsEnd(false);
+    setTeamTwoInningsEnd(false);
+    setWinner(0);
+    setMatchTie(false);
     setNextMatch(nextMatch);
   }
 
@@ -248,7 +256,7 @@ const Home = () => {
             {winner !== 0 && (
               <button
                 onClick={updateMatch}
-                className="bg-red-500 rounded-md p-4 text-white hover:bg-red-600"
+                className="bg-orange-500 rounded-md p-4 text-white hover:bg-orange-600"
               >
                 Next Match
               </button>
