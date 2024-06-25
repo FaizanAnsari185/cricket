@@ -37,7 +37,7 @@ const Home = () => {
       } else if (teamOneRun < teamTwoRun) {
         setWinner(2);
       } else if (teamOneRun === teamTwoRun) {
-        setMatchTie("Match Tie");
+        setMatchTie(1);
       }
     }
   }, [teamTwoInningsEnd, teamOneRun, teamTwoRun]);
@@ -158,8 +158,8 @@ const Home = () => {
         setTeamTwoOver(over);
         setTeamTwoBallInOneOver(ballInOneOver);
         setTeamTwoInningsEnd(true);
-        setRunInOneOver([...runInOneOver, "WB"]);
-        setRun(run + 1);
+        // setRunInOneOver([...runInOneOver, "WB"]);
+        // setRun(run + 1);
       } else {
         setRunInOneOver([...runInOneOver, "WB"]);
         setRun(run + 1);
@@ -215,18 +215,18 @@ const Home = () => {
     setRun(0);
     setWicket(0);
     setOver(0);
-    teamOneOver(0)
-    teamOneBallInOneOver(0)
-    teamOneRun(0)
-    teamOneWicket(0)
-    teamTwoOver(0)
-    teamTwoBallInOneOver(0)
-    teamTwoRun(0)
-    teamTwoWicket(0)
+    setTeamOneOver(0);
+    setTeamOneBallInOneOver(0);
+    setTeamOneRun(0);
+    setTeamOneWicket(0);
+    setTeamTwoOver(0);
+    setTeamTwoBallInOneOver(0);
+    setTeamTwoRun(0);
+    setTeamTwoWicket(0);
     setTeamOneInningsEnd(false);
     setTeamTwoInningsEnd(false);
     setWinner(0);
-    setMatchTie(false);
+    setMatchTie(0);
     setNextMatch(nextMatch);
   }
 
@@ -253,7 +253,7 @@ const Home = () => {
                 Next Over
               </button>
             )}
-            {winner !== 0 && (
+            {(winner !== 0 || matchTie === 1) && (
               <button
                 onClick={updateMatch}
                 className="bg-orange-500 rounded-md p-4 text-white hover:bg-orange-600"
@@ -285,7 +285,7 @@ const Home = () => {
             <div className="flex justify-center">Team {winner} Won</div>
           )}
           {matchTie !== 0 && (
-            <div className="flex justify-center">{matchTie}</div>
+            <div className="flex justify-center">Match Tie</div>
           )}
         </div>
       </div>
