@@ -3,7 +3,7 @@ import Playbutton from "@/components/playbutton";
 import Run from "@/components/run";
 import React, { useEffect, useState } from "react";
 
-const MAX_OVERS = 20;
+const MAX_OVERS = 2;
 
 const Home = () => {
   const [runInOneOver, setRunInOneOver] = useState([]);
@@ -41,6 +41,7 @@ const Home = () => {
   }, [teamTwoInningsEnd, teamOneRun, teamTwoRun]);
 
   function updateRun(pb) {
+    if (winner !== 0) return;
     if (wicket === 9) {
       if (teamOneInningsEnd === false) {
         setTeamOneRun(run);
@@ -207,15 +208,15 @@ const Home = () => {
   }
 
   return (
-    <div className="h-full flex justify-center items-center">
+    <div className="h-full flex justify-center items-center px-4">
       <div className="flex flex-col gap-4 border shadow-2xl rounded-md p-4 font-bold">
         <div className="flex flex-col gap-5 justify-around">
-          <div className="flex gap-4 justify-center">
+          <div className="flex gap-4 justify-center flex-wrap">
             {runInOneOver.map((item, index) => (
               <Run runwicket={item} key={index} />
             ))}
           </div>
-          <div className="flex gap-3 justify-around">
+          <div className="flex gap-3 justify-around flex-wrap">
             {[1, 2, 3, 4, 6, "Dot Ball", "Wicket", "No Ball", "Wide Ball"].map(
               (item, index) => (
                 <Playbutton pb={item} updateRun={updateRun} key={index} />
@@ -262,4 +263,3 @@ const Home = () => {
 };
 
 export default Home;
-
