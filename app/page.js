@@ -3,7 +3,7 @@ import Playbutton from "@/components/playbutton";
 import Run from "@/components/run";
 import React, { useEffect, useState } from "react";
 
-const MAX_OVERS = 2;
+const MAX_OVERS = 20;
 
 const page = () => {
   const [runInOneOver, setRunInOneOver] = useState([]);
@@ -263,20 +263,3 @@ const page = () => {
 
 export default page;
 
-{
-  /* <div className="flex justify-center">
-              Team 1 Won By 8 Wicket (15 Ball Left)
-            </div>
-            <div className="flex justify-center">
-              Team 1 Won By 5 Wicket
-            </div>
-            <div className="flex justify-center">
-              Team 1 Won By 20 Run
-            </div>
-            <div className="flex justify-center">
-              Team 1 Win By 7 Wicket
-            </div>
-            <div className="flex justify-center">
-              Match Tie
-            </div> */
-}
