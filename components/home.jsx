@@ -282,7 +282,13 @@ const Home = () => {
             </div>
           )}
           {winner !== 0 && (
-            <div className="flex justify-center">Team {winner} Won</div>
+            <div className="flex justify-center">
+              {winner === 1
+                ? `Team 1 Won by ${teamOneRun - teamTwoRun} runs`
+                : `Team 2 Won by ${10 - teamTwoWicket} wickets (${
+                    MAX_OVERS * 6 - (teamTwoOver * 6 + teamTwoBallInOneOver)
+                  } balls left)`}
+            </div>
           )}
           {matchTie !== 0 && (
             <div className="flex justify-center">Match Tie</div>
