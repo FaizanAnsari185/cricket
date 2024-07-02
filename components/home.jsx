@@ -189,22 +189,6 @@ const Home = () => {
     }
   }
 
-  function deleteBtn() {
-    if (ballInOneOver === 0) {
-      return;
-    }
-    const lastRun = runInOneOver[runInOneOver.length - 1]
-    console.log(lastRun);
-
-if (lastRun === "Wide Ball" || lastRun === "No Ball") {
-  setRun(run - 1)
-}
-
-    runInOneOver.pop();
-    setRunInOneOver([...runInOneOver]);
-  }
-
-
   function updateOver() {
     setRunInOneOver([]);
     setOver(over + 1);
@@ -242,6 +226,17 @@ if (lastRun === "Wide Ball" || lastRun === "No Ball") {
     setWinner(0);
     setMatchTie(0);
     setNextMatch(nextMatch);
+  }
+
+  function deleteBtn() {
+    runInOneOver.pop();
+    setRunInOneOver([...runInOneOver]);
+
+    if (ballInOneOver === 0) {
+      return;
+    }
+
+    const lastRun = runInOneOver[runInOneOver.length - 1];
   }
 
   return (
