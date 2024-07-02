@@ -146,8 +146,6 @@ const Home = () => {
         setTeamTwoOver(over);
         setTeamTwoBallInOneOver(ballInOneOver);
         setTeamTwoInningsEnd(true);
-        // setRunInOneOver([...runInOneOver, "WB"]);
-        // setRun(run + 1);
       } else {
         setRunInOneOver([...runInOneOver, "WB"]);
         setRun(run + 1);
@@ -191,17 +189,21 @@ const Home = () => {
     }
   }
 
-  function deleteBall(pb) {
+  function deleteBtn() {
     if (ballInOneOver === 0) {
       return;
     }
-    if (pb === "Wide Ball") {
-      setRun(run - 1);      
-    }
-    // setBallInOneOver(ballInOneOver - 1);
+    const lastRun = runInOneOver[runInOneOver.length - 1]
+    console.log(lastRun);
+
+if (lastRun === "Wide Ball" || lastRun === "No Ball") {
+  setRun(run - 1)
+}
+
     runInOneOver.pop();
     setRunInOneOver([...runInOneOver]);
   }
+
 
   function updateOver() {
     setRunInOneOver([]);
@@ -274,7 +276,7 @@ const Home = () => {
               </button>
             )}
             <button
-              onClick={deleteBall}
+              onClick={deleteBtn}
               className="bg-red-500 rounded-md p-4 text-white hover:bg-red-600"
             >
               Delete
@@ -321,10 +323,10 @@ const Home = () => {
           {winner !== 0 && (
             <div className="flex justify-center">
               {winner === 1
-                ? `Team 1 Won by ${teamOneRun - teamTwoRun} runs`
-                : `Team 2 Won by ${10 - teamTwoWicket} wickets (${
+                ? `Team 1 Won By ${teamOneRun - teamTwoRun} Runs`
+                : `Team 2 Won By ${10 - teamTwoWicket} Wickets (${
                     MAX_OVERS * 6 - (teamTwoOver * 6 + teamTwoBallInOneOver)
-                  } balls left)`}
+                  } Balls Left)`}
             </div>
           )}
           {matchTie !== 0 && (
