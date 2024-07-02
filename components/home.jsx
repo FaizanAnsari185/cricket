@@ -30,18 +30,6 @@ const Home = () => {
   // Next Match
   const [nextMatch, setNextMatch] = useState(0);
 
-  useEffect(() => {
-    if (teamTwoInningsEnd) {
-      if (teamOneRun > teamTwoRun) {
-        setWinner(1);
-      } else if (teamOneRun < teamTwoRun) {
-        setWinner(2);
-      } else if (teamOneRun === teamTwoRun) {
-        setMatchTie(1);
-      }
-    }
-  }, [teamTwoInningsEnd, teamOneRun, teamTwoRun]);
-
   function updateRun(pb) {
     if (winner !== 0) return;
     if (wicket === 9) {
@@ -204,7 +192,15 @@ const Home = () => {
   }
 
   function deleteBall(pb) {
-    
+    if (ballInOneOver === 0) {
+      return;
+    }
+    if (pb === "Wide Ball") {
+      setRun(run - 1);      
+    }
+    // setBallInOneOver(ballInOneOver - 1);
+    runInOneOver.pop();
+    setRunInOneOver([...runInOneOver]);
   }
 
   function updateOver() {
@@ -212,6 +208,18 @@ const Home = () => {
     setOver(over + 1);
     setBallInOneOver(0);
   }
+
+  useEffect(() => {
+    if (teamTwoInningsEnd) {
+      if (teamOneRun > teamTwoRun) {
+        setWinner(1);
+      } else if (teamOneRun < teamTwoRun) {
+        setWinner(2);
+      } else if (teamOneRun === teamTwoRun) {
+        setMatchTie(1);
+      }
+    }
+  }, [teamTwoInningsEnd, teamOneRun, teamTwoRun]);
 
   function updateMatch() {
     setRunInOneOver([]);
@@ -290,7 +298,7 @@ const Home = () => {
             teamTwoBallInOneOver === 0 &&
             teamTwoOver === 0 && (
               <div className="flex justify-center">
-              <u>Team Two Start Their Innings</u>
+                <u>Team Two Start Their Innings</u>
               </div>
             )}
           {winner === 0 && (
