@@ -138,7 +138,7 @@ const Home = () => {
     }
 
     if (pb === "No Ball") {
-      if (teamOneRun === run) {
+      if (teamOneInningsEnd && teamOneRun === run) {
         setTeamTwoRun(run + 1);
         setTeamTwoWicket(wicket);
         setTeamTwoOver(over);
@@ -152,7 +152,7 @@ const Home = () => {
     }
 
     if (pb === "Wide Ball") {
-      if (teamOneRun === run) {
+      if (teamOneInningsEnd && teamOneRun === run) {
         setTeamTwoRun(run + 1);
         setTeamTwoWicket(wicket);
         setTeamTwoOver(over);
@@ -201,6 +201,10 @@ const Home = () => {
         setRun(run + pb);
       }
     }
+  }
+
+  function deleteBall(pb) {
+    
   }
 
   function updateOver() {
@@ -261,9 +265,34 @@ const Home = () => {
                 Next Match
               </button>
             )}
+            <button
+              onClick={deleteBall}
+              className="bg-red-500 rounded-md p-4 text-white hover:bg-red-600"
+            >
+              Delete
+            </button>
           </div>
         </div>
         <div className="flex flex-col gap-3 justify-around">
+          {ballInOneOver === 0 &&
+            over === 0 &&
+            run === 0 &&
+            teamOneBallInOneOver === 0 &&
+            teamOneOver === 0 && (
+              <div className="flex justify-center">
+                <u>Team One Start Their Innings</u>
+              </div>
+            )}
+          {teamOneInningsEnd &&
+            ballInOneOver === 0 &&
+            over === 0 &&
+            run === 0 &&
+            teamTwoBallInOneOver === 0 &&
+            teamTwoOver === 0 && (
+              <div className="flex justify-center">
+              <u>Team Two Start Their Innings</u>
+              </div>
+            )}
           {winner === 0 && (
             <div className="flex justify-center">
               Current Score: {run}-{wicket} / {over + "." + ballInOneOver}
