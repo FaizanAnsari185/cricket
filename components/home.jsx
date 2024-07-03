@@ -30,6 +30,7 @@ const Home = () => {
   // Next Match
   const [nextMatch, setNextMatch] = useState(0);
 
+  //Score Update
   function updateRun(pb) {
     if (winner !== 0) return;
     if (wicket === 9) {
@@ -166,7 +167,6 @@ const Home = () => {
           setTeamTwoBallInOneOver(0);
           setTeamTwoInningsEnd(true);
         }
-
         setRun(0);
         setWicket(0);
         setOver(0);
@@ -189,12 +189,14 @@ const Home = () => {
     }
   }
 
+  //Next Over Button
   function updateOver() {
     setRunInOneOver([]);
     setOver(over + 1);
     setBallInOneOver(0);
   }
 
+  //Declared Winner
   useEffect(() => {
     if (teamTwoInningsEnd) {
       if (teamOneRun > teamTwoRun) {
@@ -207,6 +209,7 @@ const Home = () => {
     }
   }, [teamTwoInningsEnd, teamOneRun, teamTwoRun]);
 
+  //Next Match Button
   function updateMatch() {
     setRunInOneOver([]);
     setBallInOneOver(0);
@@ -228,20 +231,19 @@ const Home = () => {
     setNextMatch(nextMatch);
   }
 
+  //Delete Button
   function deleteBtn() {
     if (runInOneOver.length === 0) {
       return;
     }
-  
+
     const lastRun = runInOneOver.pop();
     setRunInOneOver([...runInOneOver]);
 
-    if (ballInOneOver === 0) {
-      return;
-    }
-  
     if (typeof lastRun === "number") {
       setRun(run - lastRun);
+      setBallInOneOver(ballInOneOver - 1);
+    } else if (lastRun === "*") {
       setBallInOneOver(ballInOneOver - 1);
     } else if (lastRun === "W") {
       setWicket(wicket - 1);
