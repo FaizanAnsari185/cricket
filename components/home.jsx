@@ -229,14 +229,26 @@ const Home = () => {
   }
 
   function deleteBtn() {
-    runInOneOver.pop();
+    if (runInOneOver.length === 0) {
+      return;
+    }
+  
+    const lastRun = runInOneOver.pop();
     setRunInOneOver([...runInOneOver]);
 
     if (ballInOneOver === 0) {
       return;
     }
-
-    const lastRun = runInOneOver[runInOneOver.length - 1];
+  
+    if (typeof lastRun === "number") {
+      setRun(run - lastRun);
+      setBallInOneOver(ballInOneOver - 1);
+    } else if (lastRun === "W") {
+      setWicket(wicket - 1);
+      setBallInOneOver(ballInOneOver - 1);
+    } else if (lastRun === "NB" || lastRun === "WB") {
+      setRun(run - 1);
+    }
   }
 
   return (
